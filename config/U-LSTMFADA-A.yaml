@@ -1,0 +1,31 @@
+MODEL:
+  NAME: ULSTM
+  INPUTCHANNELS: 4
+  LSTMSIZE: 64
+  MODE: 'Train'
+  MODELSOURCEWEIGHTS: 'IAFextent.pth'
+DISCRIMINATOR:
+  INPUTCHANNELS: 16
+  HIDDENDIMS: 128
+  OUTDIMS: 4
+DATASETDIR:
+  GF2DIR: '/dataset/sourcedomain/GF2patch/'
+  SENTINEL2DIR: '/dataset/sourcedomain/Sentinel2patch/'
+  IAFEXTENTDIR: '/dataset/sourcedomain/IAFExtentpatch/'
+  TARGETGF2DIR: '/dataset/targetdomain/GF2patch/'
+  TARGETSENTINEL2DIR: '/dataset/targetdomain/Sentinel2patch/'
+  TARGETDWDIR: '/dataset/targetdomain/DynamicWorldpatch/'
+SOLVER:
+  BASE_LR: 1.0e-4
+  BASE_LR_D: 1.0e-3
+  MOMENTUM: 0.9
+  MAX_ITER: 4000
+  OPTIMIZERPOWER: 0.5
+  OPTIMIZERPOWER_D: 2
+  BATCH_SIZE: 12
+  LOSS_CURVEDIR: 'losscurve_FADAA'
+  MODEL_SAVEDIR: 'IAFextent_FADAA.pth'
+LOSSWEIGHTS:
+  ADV: 0.1
+  D_SRC: 0.05
+  D_TGT: 0.1

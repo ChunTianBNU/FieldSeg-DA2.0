@@ -1,0 +1,15 @@
+MODEL:
+  NAME: UNetforboundary
+  INPUTCHANNELS: 4
+  LSTMSIZE: 64
+  MODE: 'Train'
+DATASETDIR:
+  GF2DIR: '/dataset/sourcedomain/GF2patch/'
+  IAFBOUNDARYDIR: '/dataset/sourcedomain/IAFBoundarypatch/'
+SOLVER:
+  BASE_LR: 1.0e-4
+  MAX_ITER: 10000
+  MAXEPOCH_NOIMPROVE: 100
+  BATCH_SIZE: 92
+  LOSS_CURVEDIR: 'losscurve'
+  MODEL_SAVEDIR: 'IAFboundary.pth'

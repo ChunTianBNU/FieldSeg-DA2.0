@@ -1,0 +1,16 @@
+MODEL:
+  NAME: ULSTM
+  INPUTCHANNELS: 4
+  LSTMSIZE: 64
+  MODE: 'Train'
+DATASETDIR:
+  GF2DIR: '/dataset/sourcedomain/GF2patch/'
+  SENTINEL2DIR: '/dataset/sourcedomain/Sentinel2patch/'
+  IAFEXTENTDIR: '/dataset/sourcedomain/IAFExtentpatch/'
+SOLVER:
+  BASE_LR: 1.0e-4
+  MAX_ITER: 10000
+  MAXEPOCH_NOIMPROVE: 100
+  BATCH_SIZE: 12
+  LOSS_CURVEDIR: 'losscurve'
+  MODEL_SAVEDIR: 'IAFextent.pth'
