@@ -1,0 +1,28 @@
+MODEL:
+  NAME: UNetforboundary 
+  INPUTCHANNELS: 4 
+  MODE: 'GAN' 
+  MODELSOURCEWEIGHTS: 'IAFboundary.pth' 
+DISCRIMINATOR:
+  INPUTCHANNELS: 16 
+  HIDDENDIMS: 128 
+  OUTDIMS: 4 
+DATASETDIR:
+  GF2DIR: '/dataset/sourcedomain/GF2patch/' 
+  IAFBOUNDARYDIR: '/dataset/sourcedomain/IAFBoundarypatch/'
+  TARGETGF2DIR: '/dataset/targetdomain/GF2patch/'
+  TARGETPRIORDIR: '/dataset/targetdomain/DynamicWorldpatch/'
+SOLVER:
+  BASE_LR: 1.0e-4 
+  BASE_LR_D: 1.0e-3 
+  MOMENTUM: 0.9 
+  MAX_ITER: 4000 
+  OPTIMIZERPOWER: 0.5 
+  OPTIMIZERPOWER_D: 2 
+  BATCH_SIZE: 8 
+  LOSS_CURVEDIR: 'losscurve_IAFboundary_FADAA' 
+  MODEL_SAVEDIR: 'IAFboundary_FADAA.pth'
+LOSSWEIGHTS:
+  ADV: 0.1 
+  D_SRC: 0.05 
+  D_TGT: 0.1 

@@ -12,7 +12,6 @@ import random
 from torch.utils.data import random_split
 import argparse
 import yaml
-# os.chdir("/home/tianchun/tcsegmentation/")
 seednum = 50
 def augmentation(**images):
     '''
@@ -29,13 +28,13 @@ def augmentation(**images):
         images_concatenate.append(temp)
     images_concatenate = np.concatenate(images_concatenate, axis=2)
 
-    # compose = A.Compose([A.RandomRotate90(p=0.5), A.Flip(p=0.5)], p=1)
+
     datatransform = A.Compose([
                         A.RandomRotate90(p=0.5),
                         A.Flip(p=0.5)],p=1)
     random.seed(seednum)
     images_concatenate = datatransform(image=images_concatenate)["image"]
-    #保存
+
     A.save(datatransform, 'augmentation.json')
 
     for i, key in enumerate(images):
@@ -45,7 +44,6 @@ def augmentation(**images):
     return images
 def sentiaugmentation(**images):
     '''
-    通过图像左右、上下翻转进行增强
     Returns:
     '''
     band_size = [
@@ -58,12 +56,12 @@ def sentiaugmentation(**images):
         images_concatenate.append(temp)
     images_concatenate = np.concatenate(images_concatenate, axis=2)
 
-    # compose = A.Compose([A.RandomRotate90(p=0.5), A.Flip(p=0.5)], p=1)
-    #加载
+
+
     datatransform = A.load('augmentation.json')
     global seednum
     random.seed(seednum)
-    # rng = np.random.default_rng(seednum)
+
     seednum =int((seednum+1)%100)
     images_concatenate = datatransform(image=images_concatenate)["image"]
     for i, key in enumerate(images):
@@ -71,7 +69,6 @@ def sentiaugmentation(**images):
         temp = np.transpose(temp, (2, 0, 1))
         images[key] = temp
     return images
-# 读取全部S123
 class DatasetSegtask2(BaseDataset):
     """
     Args:
@@ -95,7 +92,6 @@ class DatasetSegtask2(BaseDataset):
         self.gf_fps=[]
         self.images_fps=[]
         self.segmentation_fps=[]
-        # 月份文件夹名字
         
         for Month in range(1,360,10):
 
@@ -124,8 +120,7 @@ class DatasetSegtask2(BaseDataset):
                     exist = (~np.isnan(imag[j]))
                     temp = np.where(np.isnan(imag[j]),0,imag[j])
                     mean=temp.sum()/(exist.sum()+1e-7)
-                    imag[j] = np.where(np.isnan(imag[j]),mean,imag[j]) 
-                    # imag[i] = np.where(np.isnan(imag[i]),0,imag[i]) 
+                    imag[j] = np.where(np.isnan(imag[j]),mean,imag[j])
 
             manyimage.append(imag)
         segmentation = UNIT.img2numpy(self.segmentation_fps[i])
@@ -172,17 +167,14 @@ def training(cfg):
                                     segmentation_dir,
                                     augmentation=augmentation,
                                     sentiaugmentation=sentiaugmentation)
-    # val_percent=0.1，训练集验证集划分，9:1
-    n_val = int(len(dataset_extent) * val_percent)  # 验证集
-    n_train = len(dataset_extent) - n_val  # 测试集
-    # 划分完成
+
+    n_val = int(len(dataset_extent) * val_percent)  
+    n_train = len(dataset_extent) - n_val  
     train_dataset_extent, val_dataset_extent = random_split(
         dataset_extent, [n_train, n_val])
-    # inchannels=4?
     model = build_model(cfg).cuda()
     
     loss_fn1 = TanimotoLoss()
-    # 优化器
     optimizer = optim.Adam([{'params':model.parameters(),'lr':cfg["SOLVER"]["BASE_LR"]}])  #GF
     scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.98)
     print("Data Loading...")
@@ -194,7 +186,6 @@ def training(cfg):
                                             batch_size=cfg["SOLVER"]["BATCH_SIZE"],
                                             shuffle=True,
                                             num_workers=0)
-    #comment为名称，log_dir为存放目录
     writer1 = SummaryWriter(comment=f'LR_{0.001}_BS_{255}',log_dir=cfg["SOLVER"]["LOSS_CURVEDIR"])
     global_step = 0
     early_stop = False
@@ -241,19 +232,16 @@ def training(cfg):
                       "LR:", optimizer.state_dict()['param_groups'][0]['lr'],";",optimizer.state_dict()['param_groups'][1]['lr'],'\n',
                       "Val_CropLoss:",loss_val1,"\n",
                       ".\033[0m")
-                #图名称，Y轴数据，X轴数据
                 writer1.add_scalars('test', {'crop_loss': loss_val1},
                                    global_step)
             scheduler.step()
             train_epoch_loss1 = loss_val1
-            # 存储crop
             if train_epoch_loss1 >= train_epoch_best_loss1:
                 epochs_no_improve+=1
             else:
                 train_epoch_best_loss1 = train_epoch_loss1
                 epochs_no_improve=0
                 torch.save(model.state_dict(), cfg["SOLVER"]["MODEL_SAVEDIR"])
-            # 存储Boundary
             if epochs_no_improve == cfg["SOLVER"]["MAXEPOCH_NOIMPROVE"]:
                 print(f'Early stopping after {epoch+1} epochs.')
                 early_stop = True

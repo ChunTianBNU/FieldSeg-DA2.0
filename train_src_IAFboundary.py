@@ -12,7 +12,6 @@ import random
 from torch.utils.data import random_split
 import argparse
 import yaml
-# os.chdir("/home/tianchun/tcsegmentation/")
 def augmentation(**images):
     '''
     通过图像左右、上下翻转进行增强
@@ -58,14 +57,12 @@ class DatasetSegtask2(BaseDataset):
     ):
         self.gf_fps=[]
         self.segmentation_fps=[]
-        # 月份文件夹名字
         items = os.listdir(GF_dir)
         folders = [item for item in items if os.path.isdir(os.path.join(GF_dir, item))]
         for i in range(len(folders)):
             for file in os.listdir(os.path.join(segmentation_dir,"S{}".format(i))):
                 self.segmentation_fps.append(os.path.join(segmentation_dir,"S{}".format(i),file))
                 self.gf_fps.append(os.path.join(GF_dir,"S{}".format(i),file))
-        # convert str names to class values on masks
         self.augmentation = augmentation
 
     def __getitem__(self, i):
@@ -87,29 +84,24 @@ class DatasetSegtask2(BaseDataset):
         return len(self.segmentation_fps)
 
 def training(cfg):
-    # 从配置文件加载配置
     with open(cfg, 'r') as config_file:
         cfg = yaml.load(config_file, Loader=yaml.FullLoader)
     val_percent = 0.1
-    # S:\Graduation\share\data\Spec
     gf_dir = cfg["DATASETDIR"]["GF2DIR"]
-    # S:\Graduation\share\data\Semantic
     segmentation_dir = cfg["DATASETDIR"]["IAFBOUNDARYDIR"]
-    # dataset
     dataset_extent = DatasetSegtask2(gf_dir,
                                     segmentation_dir,
                                     augmentation=augmentation)
-    # val_percent=0.1，训练集验证集划分，9:1
-    n_val = int(len(dataset_extent) * val_percent)  # 验证集
-    n_train = len(dataset_extent) - n_val  # 测试集
-    # 划分完成
+
+    n_val = int(len(dataset_extent) * val_percent)  
+    n_train = len(dataset_extent) - n_val  
+
     train_dataset_extent, val_dataset_extent = random_split(
         dataset_extent, [n_train, n_val])
-    # inchannels=4?
     model = build_model(cfg).cuda()
     
     loss_fn1 = TanimotoLoss()
-    # 优化器
+
     optimizer = optim.Adam([{'params':model.parameters(),'lr':cfg["SOLVER"]["BASE_LR"]}])  #GF
     scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.98)
     print("Data Loading...")
@@ -121,7 +113,7 @@ def training(cfg):
                                             batch_size=cfg["SOLVER"]["BATCH_SIZE"],
                                             shuffle=True,
                                             num_workers=0)
-    #comment为名称，log_dir为存放目录
+
     writer1 = SummaryWriter(comment=f'LR_{0.001}_BS_{255}',log_dir=cfg["SOLVER"]["LOSS_CURVEDIR"])
     global_step = 0
     early_stop = False
@@ -168,19 +160,19 @@ def training(cfg):
                       "LR:", optimizer.state_dict()['param_groups'][0]['lr'],";",optimizer.state_dict()['param_groups'][1]['lr'],'\n',
                       "Val_CropLoss:",loss_val1,"\n",
                       ".\033[0m")
-                #图名称，Y轴数据，X轴数据
+
                 writer1.add_scalars('test', {'crop_loss': loss_val1},
                                    global_step)
             scheduler.step()
             train_epoch_loss1 = loss_val1
-            # 存储crop
+
             if train_epoch_loss1 >= train_epoch_best_loss1:
                 epochs_no_improve+=1
             else:
                 train_epoch_best_loss1 = train_epoch_loss1
                 epochs_no_improve=0
                 torch.save(model.state_dict(), cfg["SOLVER"]["MODEL_SAVEDIR"])
-            # 存储Boundary
+
             if epochs_no_improve == cfg["SOLVER"]["MAXEPOCH_NOIMPROVE"]:
                 print(f'Early stopping after {epoch+1} epochs.')
                 early_stop = True

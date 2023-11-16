@@ -1,7 +1,4 @@
-import torch
-import torchvision
 from torch import nn
-import numpy as np
 import torch.nn.functional as F
 class PixelDiscriminator(nn.Module):
     def __init__(self, input_nc, ndf=128, num_classes=4):

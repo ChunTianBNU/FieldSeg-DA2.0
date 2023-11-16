@@ -172,7 +172,6 @@ class targetData(BaseDataset):
         Data1="S0"
         self.images_fps=[]
         self.dw_fps=[]
-        # 月份文件夹名字
         
         for Month in range(1,360,10):
             #Senti
@@ -203,7 +202,6 @@ class targetData(BaseDataset):
                     temp = np.where(np.isnan(imag[j]),0,imag[j])
                     mean=temp.sum()/(exist.sum()+1e-7)
                     imag[j] = np.where(np.isnan(imag[j]),mean,imag[j]) 
-                    # imag[i] = np.where(np.isnan(imag[i]),0,imag[i]) 
 
             manyimage.append(imag)
         if self.dw_fps:
@@ -246,7 +244,6 @@ def training(cfg):
     def adjust_learning_rate(base_lr, iters, max_iters, power):
         lr = base_lr * ((1 - float(iters) / max_iters) ** (power))
         return lr
-    # 从配置文件加载配置
     with open(cfg, 'r') as config_file:
         cfg = yaml.load(config_file, Loader=yaml.FullLoader)
     val_percent = 0.1
@@ -277,9 +274,6 @@ def training(cfg):
         pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict}
         model_dict.update(pretrained_dict)
         model.load_state_dict(model_dict)
-        fc_params_id=[]
-        for name,param in model.named_parameters():
-            fc_params_id.append(id(param))
     else:
         pass
     loss_1 = TanimotoLoss()
@@ -295,7 +289,6 @@ def training(cfg):
                                             batch_size=cfg["SOLVER"]["BATCH_SIZE"],
                                             shuffle=True,
                                             num_workers=0)
-    #comment为名称，log_dir为存放目录
     writer1 = SummaryWriter(comment=f'LR_{0.001}_BS_{255}',log_dir=cfg["SOLVER"]["LOSS_CURVEDIR"])
     global_step = 0
     print("Loading Finished.")
@@ -375,7 +368,7 @@ def training(cfg):
             loss_total_D_tar = loss_total_D_tar / len(tar_trainloader)
             writer1.add_scalars('train', {'seg_loss': loss_total_seg,'adv_loss': loss_total_adv,'D_loss': loss_total_D,'D_srcloss': loss_total_D_src,'D_tgtloss': loss_total_D_tar},global_step)
             if epoch==cfg["SOLVER"]["MAX_ITER"]-1 or epoch%(cfg["SOLVER"]["MAX_ITER"]/8)==0:
-                torch.save(model.state_dict(), cfg["SOLVER"]["MODEL_SAVEDIR"])
+                torch.save(model.state_dict(), cfg["SOLVER"]["MODEL_SAVEDIR"]+str(epoch))
             global_step += 1
     writer1.close()
 

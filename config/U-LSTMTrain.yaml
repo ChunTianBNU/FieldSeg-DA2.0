@@ -12,5 +12,5 @@ SOLVER:
   MAX_ITER: 10000
   MAXEPOCH_NOIMPROVE: 100
   BATCH_SIZE: 12
-  LOSS_CURVEDIR: 'losscurve'
+  LOSS_CURVEDIR: 'losscurve_IAFextent'
   MODEL_SAVEDIR: 'IAFextent.pth'
