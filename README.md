@@ -44,12 +44,13 @@ python train_adv_IAFextent.py -cfg config\U-LSTMFADA-A.yaml
 ```
 python train_adv_IAFboundary.py -cfg config\UNetforBoundaryFADA-A.yaml
 ```
-If you need to modify the training parameters, you can go to the 'config' folder and edit the '.yaml' file inside.
+If you need to modify the training parameters, you can go to the [config](https://github.com/ChunTianBNU/FieldSeg-DA2.0/tree/master/config) folder and edit the '.yaml' file inside.
 
 ### Others
-If you need to train on your own data, you can use the code in **'core/util'** for training set generation. 
-If you want to replace the model's backbone, make adjustments in **'core/model'** 
-Other image processing-related code can be found in **'core/util/UNIT.py'**
+If you need to train on your own data, you can use the code in [TrainData_generator.py](https://github.com/ChunTianBNU/FieldSeg-DA2.0/blob/master/core/util/TrainData_generator.py) for training set generation. 
+If you want to replace the model's backbone, make adjustments in [core/model](https://github.com/ChunTianBNU/FieldSeg-DA2.0/tree/master/core/model)
+Other image processing-related code can be found in [core/util/UNIT.py](https://github.com/ChunTianBNU/FieldSeg-DA2.0/blob/master/core/util/UNIT.py)
+
 ### Acknowledgement
 * [DeepLab-V3-Plus](https://github.com/jfzhang95/pytorch-deeplab-xception)
 * [UNet](https://github.com/milesial/Pytorch-UNet)
