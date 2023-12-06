@@ -1,9 +1,9 @@
 # CNN-based agricultural parcels delineation Methods
-## FieldSeg-DA2.0
-An individual arable field(IAF) extraction framework.
-![image](https://github.com/ChunTianBNU/FieldSeg-DA2.0/blob/master/imgs/FieldSeg-DA2.0.png)
+
+## FieldSeg-DA2.0：An individual arable field(IAF) extraction framework.
+
 ### TODO
-- [x] Support different convolutional neural networks for parcel delineation
+- [x] Support different convolutional neural networks for agricultural parcels delineation
 - [x] GPU training
 
 * The supported networks are as follows:
@@ -27,7 +27,7 @@ This is a PyTorch(1.12.0) implementation of **FieldSeg-DA2.0, an individual arab
 - GDAL
 - OpenCV
 - CUDA >= 11.0
-- [albumentations]([https://github.com/VSainteuf/utae-paps](https://pypi.org/project/albumentations/))  1.3.1
+- [albumentations](https://pypi.org/project/albumentations/)  1.3.1
 ### Train
 You need to train **U-LSTM** first to extract IAF extents and **UNet** to extract IAF boundaries.
 ```
