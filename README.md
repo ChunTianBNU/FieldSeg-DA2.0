@@ -22,6 +22,7 @@ This is a PyTorch(1.12.0) implementation of **FieldSeg-DA2.0, an individual arab
 ### Prerequisites
 - Python 3.6
 - Pytorch 1.12.0
+- numpy 1.24.3
 - torchvision from master
 - matplotlib
 - GDAL
