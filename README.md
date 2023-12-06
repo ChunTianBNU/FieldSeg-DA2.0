@@ -19,3 +19,20 @@ The code was tested with **Anaconda** and **Python 3.8.16**.
 
 0. For **PyTorch** dependency, see [pytorch.org](https://pytorch.org/) for more details.
 1. For **GDAL** dependency used for reading and writing raster data, use version 3.6.2.
+
+### Train
+You need to train **U-LSTM** first to extract IAF extents and **UNet** to extract IAF boundaries.
+```
+python train_src_IAFextent.py -cfg config\U-LSTMTrain.yaml
+```
+```
+python train_src_IAFboundary.py -cfg config\UNetforBoundaryTrain.yaml
+```
+Next, you can proceed with the training of **FADA-A**.
+
+```
+python train_adv_IAFextent.py -cfg config\U-LSTMFADA-A.yaml
+```
+```
+python train_adv_IAFboundary.py -cfg config\UNetforBoundaryFADA-A.yaml
+```
