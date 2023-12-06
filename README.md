@@ -5,6 +5,7 @@ An individual arable field(IAF) extraction framework.
 ### TODO
 - [x] Support different convolutional neural networks for parcel delineation
 - [x] GPU training
+
 * The supported networks are as follows:
 
 |Method|Reference|
@@ -17,12 +18,16 @@ An individual arable field(IAF) extraction framework.
 ### Introduction
 This is a PyTorch(1.12.0) implementation of **FieldSeg-DA2.0, an individual arable field (IAF) extraction network using multisource remote sensing and land cover data**. The paper aims to **enhance spatiotemporal transferability on the basis of the FieldSeg-DA framework**.Our paper has not been published yet.
 
-### Installation
-The code was tested with **Anaconda** and **Python 3.8.16**.
 
-0. For **PyTorch** dependency, see [pytorch.org](https://pytorch.org/) for more details.
-1. For **GDAL** dependency used for reading and writing raster data, use version 3.6.2.
-
+### Prerequisites
+- Python 3.6
+- Pytorch 1.12.0
+- torchvision from master
+- matplotlib
+- GDAL
+- OpenCV
+- CUDA >= 11.0
+- [albumentations]([https://github.com/VSainteuf/utae-paps](https://pypi.org/project/albumentations/))  1.3.1
 ### Train
 You need to train **U-LSTM** first to extract IAF extents and **UNet** to extract IAF boundaries.
 ```
@@ -41,6 +46,10 @@ python train_adv_IAFboundary.py -cfg config\UNetforBoundaryFADA-A.yaml
 ```
 If you need to modify the training parameters, you can go to the 'config' folder and edit the '.yaml' file inside.
 
+### Others
+If you need to train on your own data, you can use the code in **'core/util'** for training set generation. 
+If you want to replace the model's backbone, make adjustments in **'core/model'** 
+Other image processing-related code can be found in **'core/util/UNIT.py'**
 ### Acknowledgement
 * [DeepLab-V3-Plus](https://github.com/jfzhang95/pytorch-deeplab-xception)
 * [UNet](https://github.com/milesial/Pytorch-UNet)
