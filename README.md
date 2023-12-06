@@ -11,7 +11,7 @@ An individual arable field(IAF) extraction framework.
 |:-:|:-:|
 |DeepLabv3+|[Encoder-decoder with atrous separable convolution for semantic image segmentation](https://arxiv.org/abs/1802.02611)|
 |UNet|[U-net: Convolutional networks for biomedical image segmentation](https://link.springer.com/chapter/10.1007/978-3-319-24574-4_28)|
-|U-TAE|[Panoptic Segmentation of Satellite Image Time Series with Convolutional Temporal Attention Networks](https://github.com/VSainteuf/utae-paps)|
+|U-TAE|[Panoptic Segmentation of Satellite Image Time Series with Convolutional Temporal Attention Networks](https://openaccess.thecvf.com/content/ICCV2021/html/Garnot_Panoptic_Segmentation_of_Satellite_Image_Time_Series_With_Convolutional_Temporal_ICCV_2021_paper.html)|
 |FieldSeg-DA|[A deep learning method for individual arable field (IAF) extraction with cross-domain adversarial capability](https://www.sciencedirect.com/science/article/pii/S0168169922007815)|
 
 ### Introduction
@@ -39,3 +39,9 @@ python train_adv_IAFextent.py -cfg config\U-LSTMFADA-A.yaml
 ```
 python train_adv_IAFboundary.py -cfg config\UNetforBoundaryFADA-A.yaml
 ```
+If you need to modify the training parameters, you can go to the 'config' folder and edit the '.yaml' file inside.
+
+### Acknowledgement
+* [DeepLab-V3-Plus](https://github.com/jfzhang95/pytorch-deeplab-xception)
+* [UNet](https://github.com/milesial/Pytorch-UNet)
+* [U-TAE](https://github.com/VSainteuf/utae-paps)
