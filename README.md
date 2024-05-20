@@ -71,5 +71,18 @@ Other image processing-related code can be found in [core/util/UNIT.py](https://
 
 If you find our method helpful for your work, please consider citing our paper:
 
-Tian, C., Chen, X., Chen, J., Cao, R., & Liu, S. (2024). FieldSeg-DA2.0: Further enhancing the spatiotemporal transferability of an individual arable field (IAF) extraction network using multisource remote sensing and land cover data. *Computers and Electronics in Agriculture, 222*, 109050. [DOI: 10.1016/j.compag.2024.109050](https://doi.org/10.1016/j.compag.2024.109050)
+```
+@article{TIAN2024109050,
+title = {FieldSeg-DA2.0: Further enhancing the spatiotemporal transferability of an individual arable field (IAF) extraction network using multisource remote sensing and land cover data},
+journal = {Computers and Electronics in Agriculture},
+volume = {222},
+pages = {109050},
+year = {2024},
+issn = {0168-1699},
+doi = {10.1016/j.compag.2024.109050},
+url = {https://www.sciencedirect.com/science/article/pii/S0168169924004411},
+author = {Chun Tian and Xuehong Chen and Jin Chen and Ruyin Cao and Shuaijun Liu},
+keywords = {Individual arable field, Spatiotemporal transferability, Spatiotemporal fusion, Adversarial domain adaptation, Land cover prior}
+}
+```
 
