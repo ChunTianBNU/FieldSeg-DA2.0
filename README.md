@@ -2,7 +2,9 @@
 
 ## FieldSeg-DA2.0：An individual arable field(IAF) extraction framework.
 > [**FieldSeg-DA2.0: Further enhancing the spatiotemporal transferability of an individual arable field (IAF) extraction network using multisource remote sensing and land cover data.**](https://www.sciencedirect.com/science/article/pii/S0168169924004411)
+> 
 > Tian, C., Chen, X., Chen, J., Cao, R., & Liu, S. (2024)
+> 
 > Additionally, you can follow our team's homepage for more information: [Chen Lab Homepage](http://www.chen-lab.club/).
 ### TODO
 - [x] Support different convolutional neural networks for agricultural parcels delineation
