@@ -24,7 +24,7 @@
 
 
 ### Introduction
-This is a PyTorch(1.12.0) implementation of **FieldSeg-DA2.0, an individual arable field (IAF) extraction network using multisource remote sensing and land cover data**. The paper aims to **enhance spatiotemporal transferability on the basis of the FieldSeg-DA framework**.Our paper has not been published yet.
+This is a PyTorch(1.12.0) implementation of **FieldSeg-DA2.0, an individual arable field (IAF) extraction network using multisource remote sensing and land cover data**. The paper aims to **enhance spatiotemporal transferability on the basis of the FieldSeg-DA framework**.
 
 
 ### Prerequisites
