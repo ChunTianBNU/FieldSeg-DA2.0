@@ -5,7 +5,7 @@
 > 
 > Tian, C., Chen, X., Chen, J., Cao, R., & Liu, S. (2024)
 > 
-> Additionally, you can follow our team's homepage for more information: [Chen Lab Homepage](http://www.chen-lab.club/).
+> Additionally, you can follow our team's homepage for more information: [Chen Lab Homepage](http://www.chen-lab.club/?p=20770).
 ### TODO
 - [x] Support different convolutional neural networks for agricultural parcels delineation
 - [x] GPU training
