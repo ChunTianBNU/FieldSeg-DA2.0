@@ -2,7 +2,7 @@ MODEL:
   NAME: ULSTM
   INPUTCHANNELS: 4
   LSTMSIZE: 64
-  MODE: 'Train'
+  MODE: 'train'
 DATASETDIR:
   GF2DIR: '/dataset/sourcedomain/GF2patch/'
   SENTINEL2DIR: '/dataset/sourcedomain/Sentinel2patch/'
